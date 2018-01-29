@@ -15,4 +15,6 @@ CHIP Mux {
 
     PARTS:
     // Put your code here:
+    Not(in=sel, out=notSel);
+    
 }
