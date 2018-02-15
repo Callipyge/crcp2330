@@ -43,5 +43,43 @@ CHIP ALU {
 
     PARTS:
    // Put you code here:
+   Mux16(a = x, b[0..15] = false, sel = zx, out = Mux1);
    
+   Not16(in = Mux1, out = xNot);
+   Mux16(a = Mux1, b = xNot, sel = nx, out = Mux2);
+
+   Mux16(a = y, b[0..15] = false, sel = zy, out = Muy1);
+   
+   Not16(in = Muy1, out = yNot);
+   Mux16(a = Muy1, b = yNot, sel = ny, out = Muy2);
+
+   Add16(a = Mux2, b = Muy2, out = Added);
+   And16(a = Mux2, b = Muy2, out = Anded);
+   Mux16(a = Anded, b = Added, sel = f, out = fOut);
+
+   Not16(in = fOut, out = notOut);
+   Mux16(a = fOut, b = notOut, sel = no, out = outD);
+   
+   Not16(in = outD, out = out0);
+   And16(a = out0, b[0..15] = true, out[0] = zero0, out[1] = zero1, out[2] = zero2, out[3] = zero3, out[4] = zero4, out[5] = zero5, out[6] = zero6, out[7] = zero7, out[8] = zero8, out[9] = zero9, out[10] = zero10, out[11] = zero11, out[12] = zero12, out[13] = zero13, out[14] = zero14, out[15] = zero15);
+   And(a = zero0, b = true, out = az0);
+   And(a = zero1, b = az0, out = az1);
+   And(a = zero2, b = az1, out = az2);
+   And(a = zero3, b = az2, out = az3);
+   And(a = zero4, b = az3, out = az4);
+   And(a = zero5, b = az4, out = az5);
+   And(a = zero6, b = az5, out = az6);
+   And(a = zero7, b = az6, out = az7);
+   And(a = zero8, b = az7, out = az8);
+   And(a = zero9, b = az8, out = az9);
+   And(a = zero10, b = az9, out = az10);
+   And(a = zero11, b = az10, out = az11);
+   And(a = zero12, b = az11, out = az12);
+   And(a = zero13, b = az12, out = az13);
+   And(a = zero14, b = az13, out = az14);
+   And(a = zero15, b = az14, out = zr);
+
+
+   And16(a = outD, b[0..15] = true, out[15] = ng, out[0..14] = dump2);
+   Not16(in = out0, out = out);
 }
