@@ -12,3 +12,46 @@
 // the screen should remain fully clear as long as no key is pressed.
 
 // Put your code here.
+(CHECK)
+	@i
+	M=0
+	@24576
+	D=M
+	@FILL
+	D;JGT
+	@CLEAR
+	0;JMP
+(CLEAR)
+	@8192 		//Filled?
+	D=A
+	@i
+	A=M
+	D=A-D
+	@CHECK
+	D;JGE
+	@i 		//Whiten
+	D=M
+	@SCREEN
+	A=A+D
+	M=0
+	@i 		//Inc
+	M=M+1
+	@CLEAR
+	0;JMP
+(FILL)
+	@8192 		//Filled?
+	D=A
+	@i
+	A=M
+	D=A-D
+	@CHECK
+	D;JGE
+	@i 		//Blacken
+	D=M
+	@SCREEN
+	A=A+D
+	M=-1
+	@i 		//Inc
+	M=M+1
+	@FILL
+	0;JMP
